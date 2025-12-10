@@ -15,8 +15,8 @@
     <button onclick="cadastrar()">Cadastrar</button>
     <button onclick="listar()">Listar</button>
     <button onclick="aluno()">Aluno</button>
-    <button onclick="media()">Media</button>
-    <button onclick="notamaiorque()">Nota maior que</button>
+    <button onclick="lsmedia()">Media</button>
+    <button onclick="maiorQue()">Nota maior que</button>
     <div id="div_msg"></div>
 </body>
 <script>
@@ -27,7 +27,7 @@
     let medias = [];
 
     let alunos = [];
-    
+
     function cadastrar() {
         div_msg.innerHTML = '';
         let nome = ipt_nome.value;
@@ -58,13 +58,13 @@
 
         if (aprovarCadastro == true) {
 
-            let json = 
+            let json =
             {
                 nome: nome,
-                notas1 : nota1,
-                notas2 : nota2,
-                notas3 : nota3,
-                media: (Number(nota1) + Number(nota2) + Number(nota3))/3
+                notas1: nota1,
+                notas2: nota2,
+                notas3: nota3,
+                media: (Number(nota1) + Number(nota2) + Number(nota3)) / 3
             }
             alunos.push(json);
             div_msg.innerHTML = `Cadastro realizado com sucesso!`
@@ -113,44 +113,51 @@
         }
     }
 
-    function media() {
-        div_msg.innerHTML = ``;
+    function lsmedia() {
+        if (alunos.length > 0) {
+            let resultMedia = prompt('Deseja ver a maior média ou a menor média?')
+            let menorMedia = 10
+            let maiorMedia = 0
+            let indexResult = 0
 
-        if (nomeAlunos.length == 0) {
-            div_msg.innerHTML = `Cadastre alunos para ver a média`
-        } else {
-            for (let i = 0; i < nomeAlunos.length; i++) {
-                medias.push(((notas1[i] + notas2[i] + notas3[i]) / 3).toFixed(1))
+            while (resultMedia != 'maior' && resultMedia != 'menor' && resultMedia != 'Maior' && resultMedia != 'Menor') {
+                resultMedia = prompt('Deseja ver a maior média ou a menor média?')
             }
-            let maior = medias[0];
-            let menor = medias[0];
-            let indexMaior = -1;
-            let indexMenor = -1;
 
-            for (let i = 0; i < medias.length; i++) {
-                if (maior < medias[i]) {
-                    maior = medias[i]
-                    indexMaior = i;
+            if (resultMedia == 'Maior' || resultMedia == 'maior') {
+                for (let i = 0; i < alunos.length; i++) {
+                    if (alunos[i].media > maiorMedia) {
+                        maiorMedia = alunos[i].media
+                        indexResult = i
+                    }
                 }
-            }
-            for (let i = 0; i < medias.length; i++) {
-                if (menor > medias[i]) {
-                    menor = medias[i]
-                    indexMenor = i;
-                }
-            }
-            // console.log(i)
-            let perguntamedia = prompt(`Você deseja ver a maior ou a menor média`);
-            if (perguntamedia == 'maior') {
-                div_msg.innerHTML += `Aluno: ${nomeAlunos[indexMaior]} – N1: ${notas1[indexMaior]} – N2: ${notas2[indexMaior]} – N3: ${notas3[indexMaior]} – Média: ${((notas1[indexMaior] + notas2[indexMaior] + notas3[indexMaior]) / 3).toFixed(1)} – Pesquisar aluno com maior média<br>`;
-            } else if (perguntamedia == 'menor') {
-                div_msg.innerHTML += `Aluno: ${nomeAlunos[indexMenor]} – N1: ${notas1[indexMenor]} – N2: ${notas2[indexMenor]} – N3: ${notas3[indexMenor]} – Média: ${((notas1[indexMenor] + notas2[indexMenor] + notas3[indexMenor]) / 3).toFixed(1)} – Pesquisar aluno com menor média<br>`;
+
+                res.innerHTML = `<br>Aluno: ${alunos[indexResult].nome} – N1: ${alunos[indexResult].notas1} – N2: ${alunos[indexResult].notas2} – N3: ${alunos[indexResult].notas3} – Média: ${alunos[indexResult].media} – Maior média cadastrada <br>`
             } else {
-                div_msg.innerHTML = `Digite maior ou menor!`
+                for (let i = 0; i < alunos.length; i++) {
+                    if (alunos[i].media < menorMedia) {
+                        menorMedia = alunos[i].media
+                        indexResult = i
+                    }
+                }
+
+                res.innerHTML = `<br>Aluno: ${alunos[indexResult].nome} – N1: ${alunos[indexResult].notas1} – N2: ${alunos[indexResult].notas2} – N3: ${alunos[indexResult].notas3} – Média: ${alunos[indexResult].media} – Menor média cadastrada <br>`
             }
         }
+    }
 
+    function maiorQue() {
+        res.innerHTML = ''
+        
+        if (alunos.length > 0) {
+            let notaRef = Number(prompt('Informe a nota limite:'))
 
+            for (let i = 0; i < alunos.length; i++) {
+                if (alunos[i].notas1 > notaRef || alunos[i].notas2 > notaRef || alunos[i].notas3 > notaRef) {
+                    res.innerHTML += `<br> Aluno: ${alunos[i].nome} – N1: ${alunos[i].notas1} – N2: ${alunos[i].notas2} – N3: ${alunos[i].notas3} – Média: ${alunos[i].media} – Pelo menos uma nota maior que ${notaRef} <br>`
+                }
+            }
+        }
     }
 </script>
 
