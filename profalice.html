@@ -25,6 +25,9 @@
     let notas2 = [];
     let notas3 = [];
     let medias = [];
+
+    let alunos = [];
+    
     function cadastrar() {
         div_msg.innerHTML = '';
         let nome = ipt_nome.value;
@@ -54,10 +57,16 @@
         div_msg.innerHTML = msg;
 
         if (aprovarCadastro == true) {
-            nomeAlunos.push(nome);
-            notas1.push(Number(nota1));
-            notas2.push(Number(nota2));
-            notas3.push(Number(nota3));
+
+            let json = 
+            {
+                nome: nome,
+                notas1 : nota1,
+                notas2 : nota2,
+                notas3 : nota3,
+                media: (Number(nota1) + Number(nota2) + Number(nota3))/3
+            }
+            alunos.push(json);
             div_msg.innerHTML = `Cadastro realizado com sucesso!`
         }
     }
