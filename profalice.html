@@ -79,11 +79,11 @@
             let lista = prompt(`Digite 1 para ver do último para o primeiro ou 2 do primeiro para o último`)
             if (lista == '1') {
                 for (let i = (alunos.length - 1); i >= 0; i--) {
-                    div_msg.innerHTML += `Aluno: ${alunos[i].nome} – N1: ${alunos[i].notas1} – N2: ${alunos[i].notas2} – N3: ${alunos[i].notas3} – Média: ${alunos[i].media} – Listar do último para o primeiro<br>`;
+                    div_msg.innerHTML += `Aluno: ${alunos[i].nome} – N1: ${alunos[i].notas1} – N2: ${alunos[i].notas2} – N3: ${alunos[i].notas3} – Média: ${alunos[i].media.toFixed(2)} – Listar do último para o primeiro<br>`;
                 }
             } else if (lista == '2') {
                 for (let i = 0; i < alunos.length; i++) {
-                    div_msg.innerHTML += `Aluno: ${alunos[i].nome} – N1: ${alunos[i].notas1} – N2: ${alunos[i].notas2} – N3: ${alunos[i].notas3} – Média: ${alunos[i].media} – Listar do primeiro para o último<br>`;
+                    div_msg.innerHTML += `Aluno: ${alunos[i].nome} – N1: ${alunos[i].notas1} – N2: ${alunos[i].notas2} – N3: ${alunos[i].notas3} – Média: ${alunos[i].media.toFixed(2)} – Listar do primeiro para o último<br>`;
                 }
             } else {
                 div_msg.innerHTML = `Digite 1 ou 2!`
@@ -96,18 +96,20 @@
         div_msg.innerHTML = ``
         let pesquisarAluno = prompt(`Qual nome do aluno que você deseja pesquisar`)
         let existeAluno = false;
+        let index;
 
         for (let i = 0; i < alunos.length; i++) {
-            if (alunos[i] == pesquisarAluno) {
+            if (alunos[i].nome == pesquisarAluno) {
                 existeAluno = true;
-                let index = i;
+                index = i;
+                break;
             }
         }
 
         if (existeAluno == false) {
             div_msg.innerHTML = `O aluno solicitado não é cadastrado`
         } else {
-            div_msg.innerHTML += `Aluno: ${alunos[index].nome} – N1: ${alunos[index].notas1} – N2: ${alunos[index].notas2} – N3: ${alunos[index].notas3} – Média: ${alunos[index].media} – Pesquisar aluno<br>`;
+            div_msg.innerHTML += `Aluno: ${alunos[index].nome} – N1: ${alunos[index].notas1} – N2: ${alunos[index].notas2} – N3: ${alunos[index].notas3} – Média: ${alunos[index].media.toFixed(2)} – Pesquisar aluno<br>`;
         }
     }
 
